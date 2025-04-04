@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Reajuste Salarial</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Reajuste Salarial</h1>
+        <form id="salaryForm">
+            <div class="input-group">
+                <label for="salary">Salário:</label>
+                <input type="number" id="salary" required>
+            </div>
+            <div class="input-group">
+                <label for="category">Categoria:</label>
+                <select id="category" required>
+                    <option value="">Selecione</option>
+                    <option value="a">Categoria A (5%)</option>
+                    <option value="b">Categoria B (6%)</option>
+                    <option value="c">Categoria C (7%)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="level">Nível:</label>
+                <select id="level" required>
+                    <option value="">Selecione</option>
+                    <option value="1">Nível 1 (+0%)</option>
+                    <option value="2">Nível 2 (+1%)</option>
+                    <option value="3">Nível 3 (+2.5%)</option>
+                </select>
+            </div>
+            <button type="submit">Calcular Reajuste</button>
+        </form>
+        <p id="result"></p>
+        <p id="error"></p>
+    </div>
+
+    <script>
+        document.getElementById('salaryForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio do formulário
+
+            // Obtendo os valores dos campos de entrada
+            const salary = parseFloat(document.getElementById('salary').value);
+            const category = document.getElementById('category').value;
+            const level = document.getElementById('level').value;
+
+            // Verificando se os campos estão preenchidos
+            if (!salary || !category || !level) {
+                document.getElementById('error').textContent = 'Por favor, preencha todos os campos.';
+                return;
+            } else {
+                document.getElementById('error').textContent = '';
+            }
+
+            // Calculando o reajuste
+            let categoryRate;
+            switch (category) {
+                case 'a':
+                    categoryRate = 0.05;
+                    break;
+                case 'b':
+                    categoryRate = 0.06;
+                    break;
+                case 'c':
+                    categoryRate = 0.07;
+                    break;
+                default:
+                    categoryRate = 0;
+            }
+
+            let levelRate;
+            switch (level) {
+                case '1':
+                    levelRate = 0.00;
+                    break;
+                case '2':
+                    levelRate = 0.01;
+                    break;
+                case '3':
+                    levelRate = 0.025;
+                    break;
+                default:
+                    levelRate = 0;
+            }
+
+            const totalReajuste = salary * (categoryRate + levelRate);
+            const newSalary = salary + totalReajuste;
+
+            // Exibindo o resultado
+            document.getElementById('result').innerHTML = `Novo Salário: <span>R$ ${newSalary.toFixed(2)}</span>`;
+        });
+    </script>
+</body>
+</html>

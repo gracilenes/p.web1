@@ -1,0 +1,41 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Adicione uma nova tarefa" required>
+            <button type="submit">Adicionar</button>
+        </form>
+        <ul id="todo-list"></ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('todo-form');
+            const input = document.getElementById('todo-input');
+            const todoList = document.getElementById('todo-list');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const todoText = input.value.trim();
+                if (todoText) {
+                    addTodoItem(todoText);
+                    input.value = '';
+                }
+            });
+
+            function addTodoItem(text) {
+                const li = document.createElement('li');
+                li.textContent = text;
+                li.addEventListener('click', () => {
+                    li.remove();
+                });
+                todoList.appendChild(li);
+            }
+        });
+    </script>
+</html>
